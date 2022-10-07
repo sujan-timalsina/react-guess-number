@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import ModalComponent from "./ModalComponent"
 
 const PlayGround = ({ option, ...props }) => {
@@ -7,6 +7,8 @@ const PlayGround = ({ option, ...props }) => {
     const [recentGuesses, setRecentGuesses] = useState([])
     const [triesLeft, setTriesLeft] = useState(option.tries)
     const [showModal, setShowModal] = useState()
+
+    const triesLeftRef = useRef(option.tries)
 
     useEffect(() => {
         function generateRandomNumber() {
@@ -22,38 +24,32 @@ const PlayGround = ({ option, ...props }) => {
 
     const guessNumberFormHandler = (event) => {
         event.preventDefault()
+        if (triesLeftRef.current > 0) {
+            triesLeftRef.current--
+            setTriesLeft(triesLeft - 1)
+            setRecentGuesses(prevState => ([guessNumber, ...prevState]))
+        }
         if (correctNumber == guessNumber) {
             //Modal with play again or main menu
             //guessed correctly
             setShowModal([
+                { guessed: 'Congratulation, you guessed it!', inTries: triesLeftRef.current },
                 { buttonName: 'Play Again', methodName: 'toPlayAgain' },
                 { buttonName: 'Main Menu', methodName: 'onMainMenuAfterSuccess' },
             ])
             return
         }
-        if (triesLeft > 0) {
-            setTriesLeft(triesLeft - 1)
-        }
-        //we will solve it by using useRef() hook
-        //useState le asynchronously update garxa so
 
-        /*
-        Example::::::
-        const [testVariable, setTestVariable] = useState(false);
-        const reference = useRef();
-        reference.current = testVariable;
-        */
-
-        if (triesLeft == 0) {
+        if (triesLeftRef.current == 0) {
             //Modal with try again
             //failed to guess within try limit
             setShowModal([
+                { guessed: 'Sorry, you failed to guess!', inTries: 0 },
                 { buttonName: 'Try Again', methodName: 'toTryAgain' },
                 { buttonName: 'Main Menu', methodName: 'onMainMenuAfterFail' },
             ])
             return
         }
-        setRecentGuesses(prevState => ([guessNumber, ...prevState]))
 
     }
 
@@ -70,6 +66,7 @@ const PlayGround = ({ option, ...props }) => {
     const playAgainHandler = () => {
         props.toChangeHighscore(props.highscore + 1)
         setTriesLeft(option.max)
+        triesLeftRef.current = option.max
         setRecentGuesses([])
         //generate random number for correctNumber
     }
@@ -77,6 +74,7 @@ const PlayGround = ({ option, ...props }) => {
     const tryAgainHandler = () => {
         props.toChangeHighscore(0)
         setTriesLeft(option.max)
+        triesLeftRef.current = option.max
         setRecentGuesses([])
         //generate random number for correctNumber
     }
