@@ -32,22 +32,30 @@ const PlayGround = ({ option, ...props }) => {
         if (correctNumber == guessNumber) {
             //Modal with play again or main menu
             //guessed correctly
-            setShowModal([
-                { guessed: 'Congratulation, you guessed it!', inTries: triesLeftRef.current },
-                { buttonName: 'Play Again', methodName: 'toPlayAgain' },
-                { buttonName: 'Main Menu', methodName: 'onMainMenuAfterSuccess' },
-            ])
+            setShowModal({
+                status: true,
+                outcome: 'Congratulation, you guessed it!',
+                inTries: triesLeftRef.current,
+                button1: 'Play Again',
+                method1: 'toPlayAgain',
+                button2: 'Main Menu',
+                method2: 'onMainMenuAfterSuccess',
+            })
             return
         }
 
         if (triesLeftRef.current == 0) {
             //Modal with try again
             //failed to guess within try limit
-            setShowModal([
-                { guessed: 'Sorry, you failed to guess!', inTries: 0 },
-                { buttonName: 'Try Again', methodName: 'toTryAgain' },
-                { buttonName: 'Main Menu', methodName: 'onMainMenuAfterFail' },
-            ])
+            setShowModal({
+                status: false,
+                outcome: 'Sorry, you failed to guess!',
+                inTries: 0,
+                button1: 'Try Again',
+                method1: 'toPlayAgain',
+                button2: 'Main Menu',
+                method2: 'onMainMenuAfterFail',
+            })
             return
         }
 
