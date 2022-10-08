@@ -3,7 +3,7 @@ import ModalComponent from "./ModalComponent"
 
 const PlayGround = ({ option, ...props }) => {
     const [correctNumber, setCorrectNumber] = useState()
-    const [guessNumber, setGuessNumber] = useState()
+    const [guessNumber, setGuessNumber] = useState('')
     const [recentGuesses, setRecentGuesses] = useState([])
     const [triesLeft, setTriesLeft] = useState(option.tries)
     const [showModal, setShowModal] = useState()
@@ -35,11 +35,7 @@ const PlayGround = ({ option, ...props }) => {
             setShowModal({
                 status: true,
                 outcome: 'Congratulation, you guessed it!',
-                inTries: triesLeftRef.current,
-                button1: 'Play Again',
-                method1: 'toPlayAgain',
-                button2: 'Main Menu',
-                method2: 'onMainMenuAfterSuccess',
+                inTries: triesLeftRef.current
             })
             return
         }
@@ -50,11 +46,7 @@ const PlayGround = ({ option, ...props }) => {
             setShowModal({
                 status: false,
                 outcome: 'Sorry, you failed to guess!',
-                inTries: 0,
-                button1: 'Try Again',
-                method1: 'toPlayAgain',
-                button2: 'Main Menu',
-                method2: 'onMainMenuAfterFail',
+                inTries: 0
             })
             return
         }
@@ -73,18 +65,22 @@ const PlayGround = ({ option, ...props }) => {
 
     const playAgainHandler = () => {
         props.toChangeHighscore(props.highscore + 1)
-        setTriesLeft(option.max)
-        triesLeftRef.current = option.max
+        setTriesLeft(option.tries)
+        triesLeftRef.current = option.tries
         setRecentGuesses([])
-        //generate random number for correctNumber
+        setShowModal(null)
+        setGuessNumber('')
+        setCorrectNumber(Math.floor((Math.random() * option.max) + 1))
     }
 
     const tryAgainHandler = () => {
         props.toChangeHighscore(0)
-        setTriesLeft(option.max)
-        triesLeftRef.current = option.max
+        setTriesLeft(option.tries)
+        triesLeftRef.current = option.tries
         setRecentGuesses([])
-        //generate random number for correctNumber
+        setShowModal(null)
+        setGuessNumber('')
+        setCorrectNumber(Math.floor((Math.random() * option.max) + 1))
     }
 
     const hideModalHandler = () => {
@@ -116,6 +112,7 @@ const PlayGround = ({ option, ...props }) => {
                     id="guess-number"
                     min={option.min}
                     max={option.max}
+                    value={guessNumber}
                     onChange={guessNumberInputHandler}
                 />
                 <p>Enter your guess and press enter!</p>
