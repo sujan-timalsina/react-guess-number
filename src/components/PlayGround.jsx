@@ -16,7 +16,7 @@ const PlayGround = ({ option, ...props }) => {
         }
         generateRandomNumber()
     }, [])
-    console.log(correctNumber)
+    // console.log(correctNumber)
 
     const guessNumberInputHandler = (event) => {
         setGuessNumber(event.target.value)
