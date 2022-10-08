@@ -35,7 +35,8 @@ const PlayGround = ({ option, ...props }) => {
             setShowModal({
                 status: true,
                 outcome: 'Congratulation, you guessed it!',
-                inTries: triesLeftRef.current
+                inTries: triesLeftRef.current,
+                correctNumber: correctNumber
             })
             return
         }
@@ -46,7 +47,8 @@ const PlayGround = ({ option, ...props }) => {
             setShowModal({
                 status: false,
                 outcome: 'Sorry, you failed to guess!',
-                inTries: 0
+                inTries: 0,
+                correctNumber: correctNumber
             })
             return
         }

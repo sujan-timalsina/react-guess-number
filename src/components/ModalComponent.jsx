@@ -20,6 +20,7 @@ const ModalOverlay = ({ modalInfo, onMainMenuAfterSuccess, onMainMenuAfterFail, 
             <ul className="modal-ul">
                 <li className={modalInfo.status ? 'text-green-400' : 'text-red-400'}>{modalInfo.outcome}</li>
                 <li>Tries Left: {modalInfo.inTries}</li>
+                <li>Correct Number: {modalInfo.correctNumber}</li>
                 {modalInfo.status && (
                     <>
                         <li><button onClick={toPlayAgain}>Play Again</button></li>
