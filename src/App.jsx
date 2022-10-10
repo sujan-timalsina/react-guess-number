@@ -4,10 +4,13 @@ import EnterUsername from './components/EnterUsername'
 import ChooseDifficulty from './components/ChooseDifficulty'
 
 function App() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState(
+    JSON.parse(localStorage.getItem('guessNumberUsername')) || ''
+  )
 
   const usernameHandler = (inputUsername) => {
     setName(inputUsername)
+    localStorage.setItem('guessNumberUsername', JSON.stringify(inputUsername))
   }
 
   return (

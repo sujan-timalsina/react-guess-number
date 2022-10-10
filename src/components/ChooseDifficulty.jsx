@@ -3,7 +3,9 @@ import PlayGround from './PlayGround.jsx'
 
 export default function ChooseDifficulty(props) {
     const [selectedOption, setSelectedOption] = useState({})
-    const [highscore, setHighscore] = useState(0)
+    const [highscore, setHighscore] = useState(
+        JSON.parse(localStorage.getItem('guessNumberHighscore')) || 0
+    )
     const options = [
         { difficulty: 'Easy', tries: 5, min: 1, max: 50 },
         { difficulty: 'Medium', tries: 7, min: 1, max: 100 },
@@ -20,6 +22,7 @@ export default function ChooseDifficulty(props) {
 
     const changeHighscoreHandler = (highscoreValue) => {
         setHighscore(highscoreValue)
+        localStorage.setItem('guessNumberHighscore', JSON.stringify(highscoreValue))
     }
 
     return (
