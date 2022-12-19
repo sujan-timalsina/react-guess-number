@@ -7,7 +7,7 @@ export default function ChooseDifficulty(props) {
         JSON.parse(localStorage.getItem('guessNumberHighscore')) || 0
     )
     const options = [
-        { difficulty: 'Easy', tries: 5, min: 1, max: 50 },
+        { difficulty: 'Easy', tries: 7, min: 1, max: 50 },
         { difficulty: 'Medium', tries: 7, min: 1, max: 100 },
         { difficulty: 'Hard', tries: 10, min: 1, max: 500 }
     ]
@@ -31,6 +31,7 @@ export default function ChooseDifficulty(props) {
                 <>
                     <div className="top-info flex justify-between mb-20">
                         <span>Username: {props.username}</span>
+                        <span>Guess Number</span>
                         <span>Win streak: {highscore}</span>
                     </div>
                     <div className="choose-option-section text-xl flex flex-col items-center gap-y-5">

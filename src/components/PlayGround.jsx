@@ -116,6 +116,7 @@ const PlayGround = ({ option, ...props }) => {
                     max={option.max}
                     value={guessNumber}
                     onChange={guessNumberInputHandler}
+                    required
                 />
                 <p>Enter your guess and press enter!</p>
             </form>
@@ -133,15 +134,15 @@ const PlayGround = ({ option, ...props }) => {
 const GuessesComponent = ({ guessNum, correctNum }) => {
     if (correctNum > guessNum) {
         return (
-            <span className="green-span">{`${guessNum} (Higher)`}</span>
+            <span className="green-span">{`Higher than ${guessNum}`}</span>
         )
     } else if (correctNum < guessNum) {
         return (
-            <span className="red-span">{`${guessNum} (Lower)`}</span>
+            <span className="red-span">{`Lower than ${guessNum}`}</span>
         )
     } else if (correctNum == guessNum) {
         return (
-            <span className="green-span">{`${guessNum} (Spot On!)`}</span>
+            <span className="green-span">{`Your're Spont On! ->${guessNum}`}</span>
         )
     }
 }
