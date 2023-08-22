@@ -1,92 +1,91 @@
-import { useState, useEffect, useRef } from "react"
-import ModalComponent from "./ModalComponent"
+import { useState, useEffect, useRef } from "react";
+import ModalComponent from "./ModalComponent";
 
 const PlayGround = ({ option, ...props }) => {
-    const [correctNumber, setCorrectNumber] = useState()
-    const [guessNumber, setGuessNumber] = useState('')
-    const [recentGuesses, setRecentGuesses] = useState([])
-    const [triesLeft, setTriesLeft] = useState(option.tries)
-    const [showModal, setShowModal] = useState()
-
-    const triesLeftRef = useRef(option.tries)
+    const [correctNumber, setCorrectNumber] = useState();
+    const [guessNumber, setGuessNumber] = useState('');
+    const [recentGuesses, setRecentGuesses] = useState([]);
+    const [triesLeft, setTriesLeft] = useState(option.tries);
+    const [showModal, setShowModal] = useState();
 
     useEffect(() => {
         function generateRandomNumber() {
-            setCorrectNumber(Math.floor((Math.random() * option.max) + 1))
+            setCorrectNumber(Math.floor((Math.random() * option.max) + 1));
         }
-        generateRandomNumber()
+        generateRandomNumber();
     }, [])
-    // console.log(correctNumber)
 
     const guessNumberInputHandler = (event) => {
-        setGuessNumber(event.target.value)
+        setGuessNumber(event.target.valueAsNumber);
     }
 
     const guessNumberFormHandler = (event) => {
-        event.preventDefault()
-        if (triesLeftRef.current > 0) {
-            triesLeftRef.current--
-            setTriesLeft(triesLeft - 1)
-            setRecentGuesses(prevState => ([guessNumber, ...prevState]))
-        }
-        if (correctNumber == guessNumber) {
-            //Modal with play again or main menu
-            //guessed correctly
-            setShowModal({
-                status: true,
-                outcome: 'Congratulation, you guessed it!',
-                inTries: triesLeftRef.current,
-                correctNumber: correctNumber
-            })
-            return
-        }
+        event.preventDefault();
 
-        if (triesLeftRef.current == 0) {
-            //Modal with try again
-            //failed to guess within try limit
-            setShowModal({
-                status: false,
-                outcome: 'Sorry, you failed to guess!',
-                inTries: 0,
-                correctNumber: correctNumber
-            })
-            return
-        }
+        setTriesLeft(prevTriesLeft => prevTriesLeft - 1);
+        setRecentGuesses(prevState => ([guessNumber, ...prevState]));
+    };
 
-    }
+    useEffect(() => {
+        if (triesLeft === 0) {
+            if (correctNumber === guessNumber) {
+                setShowModal({
+                    status: true,
+                    outcome: 'Congratulations, you guessed it!',
+                    inTries: triesLeft,
+                    correctNumber: correctNumber
+                });
+                props.toChangeHighscore(props.highscore + 1);
+            } else {
+                setShowModal({
+                    status: false,
+                    outcome: 'Sorry, you failed to guess!',
+                    inTries: triesLeft,
+                    correctNumber: correctNumber
+                });
+                props.toChangeHighscore(0);
+            }
+        } else {
+            if (correctNumber === guessNumber) {
+                setShowModal({
+                    status: true,
+                    outcome: 'Congratulations, you guessed it!',
+                    inTries: triesLeft,
+                    correctNumber: correctNumber
+                });
+                props.toChangeHighscore(props.highscore + 1);
+            }
+        }
+        setGuessNumber('');
+    }, [triesLeft]);
 
     const goToMainMenuAfterFailedHandler = () => {
-        props.toChangeHighscore(0)
-        props.toResetSelectedOption({})
+        props.toResetSelectedOption({});
     }
 
     const goToMainMenuAfterSuccessHandler = () => {
-        props.toChangeHighscore(props.highscore + 1)
-        props.toResetSelectedOption({})
+        props.toResetSelectedOption({});
     }
 
     const playAgainHandler = () => {
-        props.toChangeHighscore(props.highscore + 1)
-        setTriesLeft(option.tries)
-        triesLeftRef.current = option.tries
-        setRecentGuesses([])
-        setShowModal(null)
-        setGuessNumber('')
-        setCorrectNumber(Math.floor((Math.random() * option.max) + 1))
+        setTriesLeft(option.tries);
+        setRecentGuesses([]);
+        setShowModal(null);
+        setGuessNumber('');
+        setCorrectNumber(Math.floor((Math.random() * option.max) + 1));
     }
 
     const tryAgainHandler = () => {
-        props.toChangeHighscore(0)
-        setTriesLeft(option.tries)
-        triesLeftRef.current = option.tries
-        setRecentGuesses([])
-        setShowModal(null)
-        setGuessNumber('')
-        setCorrectNumber(Math.floor((Math.random() * option.max) + 1))
+        props.toChangeHighscore(0);
+        setTriesLeft(option.tries);
+        setRecentGuesses([]);
+        setShowModal(null);
+        setGuessNumber('');
+        setCorrectNumber(Math.floor((Math.random() * option.max) + 1));
     }
 
     const hideModalHandler = () => {
-        setShowModal(null)
+        setShowModal(null);
     }
 
     return (
@@ -147,4 +146,4 @@ const GuessesComponent = ({ guessNum, correctNum }) => {
     }
 }
 
-export default PlayGround
+export default PlayGround;
