@@ -40,8 +40,8 @@ body {
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    display: grid;
-    place-items: center;
+    /* display: grid;
+    place-items: center; */
 }
 
 h1 {
@@ -68,11 +68,6 @@ button:hover {
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
-}
-
-.menu-play-container {
-    width: 900px;
-    height: 600px;
 }
 
 .recent-guesses {

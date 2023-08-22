@@ -106,7 +106,7 @@ const PlayGround = ({ option, ...props }) => {
                 <span>Difficulty: {option.difficulty}</span>
                 <span>Win streak: {props.highscore}</span>
             </div>
-            <form className="flex flex-col my-20" onSubmit={guessNumberFormHandler}>
+            <form className="flex flex-col mb-20 mt-48" onSubmit={guessNumberFormHandler}>
                 <label htmlFor="guess-number" className="text-3xl mb-5">Enter Number</label>
                 <input
                     type="number"
@@ -120,7 +120,7 @@ const PlayGround = ({ option, ...props }) => {
                 />
                 <p>Enter your guess and press enter!</p>
             </form>
-            <div>
+            <div className="flex flex-col gap-5">
                 <div>Guesses Left: {triesLeft}</div>
                 <div>Your recent guesses: </div>
                 <div className="recent-guesses">

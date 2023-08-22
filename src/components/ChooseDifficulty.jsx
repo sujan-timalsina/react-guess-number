@@ -34,8 +34,8 @@ export default function ChooseDifficulty(props) {
                         <span>Guess Number</span>
                         <span>Win streak: {highscore}</span>
                     </div>
-                    <div className="choose-option-section text-xl flex flex-col items-center gap-y-5">
-                        <span>Choose Option</span>
+                    <div className="choose-option-section text-xl flex flex-col items-center gap-y-5 mt-48">
+                        <span>Choose Difficulty:</span>
                         {options.map((option, index) =>
                             <button
                                 className="rounded-lg"

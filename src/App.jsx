@@ -14,7 +14,7 @@ function App() {
   }
 
   return (
-    <div className="App border-8 border-[#cce3de] menu-play-container p-2 text-xl">
+    <div className="App h-full p-2 text-xl">
       {(name == '') && (
         <EnterUsername onEnteredUsername={usernameHandler} />
       )}
